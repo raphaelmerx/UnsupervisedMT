@@ -11,8 +11,8 @@ set -e
 # Data preprocessing configuration
 #
 
-N_MONO=10000000  # number of monolingual sentences for each language
-CODES=60000      # number of BPE codes
+N_MONO=3000000  # number of monolingual sentences for each language
+CODES=10000      # number of BPE codes
 N_THREADS=48     # number of threads in data preprocessing
 N_EPOCHS=10      # number of fastText epochs
 
@@ -73,7 +73,7 @@ TGT_TEST=$PARA_PATH/dev/newstest2014-fren-src.fr
 cd $TOOLS_PATH
 if [ ! -d "$MOSES" ]; then
   echo "Cloning Moses from GitHub repository..."
-  git clone https://github.com/moses-smt/mosesdecoder.git
+  git clone --depth 1 https://github.com/moses-smt/mosesdecoder.git
 fi
 echo "Moses found in: $MOSES"
 
@@ -81,7 +81,7 @@ echo "Moses found in: $MOSES"
 cd $TOOLS_PATH
 if [ ! -d "$FASTBPE_DIR" ]; then
   echo "Cloning fastBPE from GitHub repository..."
-  git clone https://github.com/glample/fastBPE
+  git clone --depth 1 https://github.com/glample/fastBPE
 fi
 echo "fastBPE found in: $FASTBPE_DIR"
 
@@ -98,7 +98,7 @@ echo "fastBPE compiled in: $FASTBPE"
 cd $TOOLS_PATH
 if [ ! -d "$FASTTEXT_DIR" ]; then
   echo "Cloning fastText from GitHub repository..."
-  git clone https://github.com/facebookresearch/fastText.git
+  git clone --depth 1 https://github.com/facebookresearch/fastText.git
 fi
 echo "fastText found in: $FASTTEXT_DIR"
 
@@ -120,9 +120,9 @@ cd $MONO_PATH
 
 echo "Downloading English files..."
 wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2007.en.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2008.en.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2009.en.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.en.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2008.en.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2009.en.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.en.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2011.en.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2012.en.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2013.en.shuffled.gz
@@ -134,8 +134,8 @@ wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.en
 echo "Downloading French files..."
 wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2007.fr.shuffled.gz
 wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2008.fr.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2009.fr.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.fr.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2009.fr.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2011.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2012.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2013.fr.shuffled.gz
@@ -146,7 +146,7 @@ wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.fr
 
 # decompress monolingual data
 for FILENAME in news*gz; do
-  OUTPUT="${FILENAME::-3}"
+  OUTPUT="${FILENAME%???}"
   if [ ! -f "$OUTPUT" ]; then
     echo "Decompressing $FILENAME..."
     gunzip -k $FILENAME
