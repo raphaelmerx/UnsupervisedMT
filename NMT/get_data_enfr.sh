@@ -11,7 +11,7 @@ set -e
 # Data preprocessing configuration
 #
 
-N_MONO=3000000  # number of monolingual sentences for each language
+N_MONO=300000  # number of monolingual sentences for each language
 CODES=10000      # number of BPE codes
 N_THREADS=48     # number of threads in data preprocessing
 N_EPOCHS=10      # number of fastText epochs
@@ -133,7 +133,7 @@ wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2007.en
 
 echo "Downloading French files..."
 wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2007.fr.shuffled.gz
-wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2008.fr.shuffled.gz
+# wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2008.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2009.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2010.fr.shuffled.gz
 # wget -c http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2011.fr.shuffled.gz
